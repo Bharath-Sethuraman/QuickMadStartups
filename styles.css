@@ -15,15 +15,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-#smooth-wrapper {
-    overflow: hidden;
-}
-
-#smooth-content {
-    overflow: visible;
-    will-change: transform;
-}
-
 .container {
     max-width: 1140px;
     margin: 0 auto;

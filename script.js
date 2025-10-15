@@ -1,17 +1,8 @@
 // Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+gsap.registerPlugin(ScrollTrigger);
 
-// Initialize smooth scrolling
-let smoother;
-if (window.innerWidth > 768) {
-    smoother = ScrollSmoother.create({
-        wrapper: '#smooth-wrapper',
-        content: '#smooth-content',
-        smooth: 1.5,
-        effects: true,
-        smoothTouch: 0.1,
-    });
-}
+// Smooth scroll using native CSS
+document.documentElement.style.scrollBehavior = 'smooth';
 
 // Page load animation
 window.addEventListener('load', () => {
@@ -67,6 +58,9 @@ window.addEventListener('load', () => {
             duration: 1.2,
             ease: 'power3.out'
         }, '-=0.5');
+    
+    // Set initial opacity
+    gsap.set('.hero-content, .hero-dashboard', { opacity: 1 });
 });
 
 // Parallax effect for hero elements
@@ -93,32 +87,6 @@ gsap.to('.hero-blur', {
     }
 });
 
-// Dashboard card typing animation
-const typingAnimation = () => {
-    const texts = document.querySelectorAll('.dashboard-text, .response-text');
-    texts.forEach(text => {
-        const content = text.textContent;
-        text.textContent = '';
-        let index = 0;
-        
-        ScrollTrigger.create({
-            trigger: text,
-            start: 'top 80%',
-            onEnter: () => {
-                const interval = setInterval(() => {
-                    if (index < content.length) {
-                        text.textContent += content[index];
-                        index++;
-                    } else {
-                        clearInterval(interval);
-                    }
-                }, 30);
-            },
-            once: true
-        });
-    });
-};
-
 // Trusted section animation
 gsap.from('.trusted-section', {
     opacity: 0,
@@ -144,7 +112,7 @@ gsap.from('.partners-logo', {
 });
 
 // Bento section animations
-gsap.from('.section-badge', {
+gsap.from('.bento-section .section-badge', {
     scale: 0,
     opacity: 0,
     duration: 0.6,
@@ -199,10 +167,13 @@ document.querySelectorAll('.bento-card').forEach(card => {
             ease: 'power2.out'
         });
         
-        gsap.to(this.querySelector('.bento-image'), {
-            scale: 1.05,
-            duration: 0.3
-        });
+        const image = this.querySelector('.bento-image');
+        if (image) {
+            gsap.to(image, {
+                scale: 1.05,
+                duration: 0.3
+            });
+        }
     });
     
     card.addEventListener('mouseleave', function() {
@@ -213,10 +184,13 @@ document.querySelectorAll('.bento-card').forEach(card => {
             ease: 'power2.out'
         });
         
-        gsap.to(this.querySelector('.bento-image'), {
-            scale: 1,
-            duration: 0.3
-        });
+        const image = this.querySelector('.bento-image');
+        if (image) {
+            gsap.to(image, {
+                scale: 1,
+                duration: 0.3
+            });
+        }
     });
 });
 
@@ -308,11 +282,14 @@ document.querySelectorAll('.use-case-card').forEach(card => {
             ease: 'power2.out'
         });
         
-        gsap.to(this.querySelector('img'), {
-            rotation: 10,
-            scale: 1.1,
-            duration: 0.3
-        });
+        const img = this.querySelector('img');
+        if (img) {
+            gsap.to(img, {
+                rotation: 10,
+                scale: 1.1,
+                duration: 0.3
+            });
+        }
     });
     
     card.addEventListener('mouseleave', function() {
@@ -322,11 +299,14 @@ document.querySelectorAll('.use-case-card').forEach(card => {
             duration: 0.3
         });
         
-        gsap.to(this.querySelector('img'), {
-            rotation: 0,
-            scale: 1,
-            duration: 0.3
-        });
+        const img = this.querySelector('img');
+        if (img) {
+            gsap.to(img, {
+                rotation: 0,
+                scale: 1,
+                duration: 0.3
+            });
+        }
     });
 });
 
@@ -368,32 +348,6 @@ gsap.from('.testimonial-card', {
         start: 'top 80%'
     }
 });
-
-// Continuous scroll animation for testimonials
-const testimonialsScroll = document.querySelector('.testimonials-scroll');
-if (testimonialsScroll) {
-    const scrollWidth = testimonialsScroll.scrollWidth;
-    const containerWidth = testimonialsScroll.parentElement.offsetWidth;
-    
-    gsap.to('.testimonials-scroll', {
-        x: -(scrollWidth / 2),
-        duration: 30,
-        ease: 'none',
-        repeat: -1,
-        modifiers: {
-            x: gsap.utils.unitize(x => parseFloat(x) % (scrollWidth / 2))
-        }
-    });
-    
-    // Pause on hover
-    testimonialsScroll.addEventListener('mouseenter', () => {
-        gsap.to('.testimonials-scroll', { timeScale: 0, duration: 0.3 });
-    });
-    
-    testimonialsScroll.addEventListener('mouseleave', () => {
-        gsap.to('.testimonials-scroll', { timeScale: 1, duration: 0.3 });
-    });
-}
 
 // Testimonial card hover effect
 document.querySelectorAll('.testimonial-card').forEach(card => {
@@ -480,28 +434,27 @@ document.querySelectorAll('.btn-gradient, .btn-outline, .action-btn').forEach(bu
 });
 
 // Navbar scroll behavior
-let lastScroll = 0;
-const navbar = document.querySelector('.navbar');
-
 ScrollTrigger.create({
     start: 'top -100',
     end: 99999,
     onUpdate: (self) => {
         const currentScroll = self.scroll();
-        if (currentScroll > 100) {
-            gsap.to('.navbar', {
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                backdropFilter: 'blur(10px)',
-                duration: 0.3
-            });
-        } else {
-            gsap.to('.navbar', {
-                backgroundColor: 'transparent',
-                backdropFilter: 'blur(5px)',
-                duration: 0.3
-            });
+        const navbar = document.querySelector('.navbar');
+        if (navbar) {
+            if (currentScroll > 100) {
+                gsap.to(navbar, {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    backdropFilter: 'blur(10px)',
+                    duration: 0.3
+                });
+            } else {
+                gsap.to(navbar, {
+                    backgroundColor: 'transparent',
+                    backdropFilter: 'blur(5px)',
+                    duration: 0.3
+                });
+            }
         }
-        lastScroll = currentScroll;
     }
 });
 
@@ -511,26 +464,25 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-            if (smoother) {
-                smoother.scrollTo(target, true, 'top 100px');
-            } else {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
         }
     });
 });
 
 // Cursor blink animation
-gsap.to('.cursor', {
-    opacity: 0,
-    duration: 0.5,
-    repeat: -1,
-    yoyo: true,
-    ease: 'power1.inOut'
-});
+const cursors = document.querySelectorAll('.cursor');
+if (cursors.length > 0) {
+    gsap.to('.cursor', {
+        opacity: 0,
+        duration: 0.5,
+        repeat: -1,
+        yoyo: true,
+        ease: 'power1.inOut'
+    });
+}
 
 // Gradient button glow effect
 document.querySelectorAll('.btn-gradient').forEach(btn => {
@@ -553,6 +505,3 @@ document.querySelectorAll('.btn-gradient').forEach(btn => {
 window.addEventListener('resize', () => {
     ScrollTrigger.refresh();
 });
-
-// Initialize typing animation
-setTimeout(typingAnimation, 1000);
