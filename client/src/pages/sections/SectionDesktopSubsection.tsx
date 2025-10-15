@@ -11,19 +11,22 @@ const testimonials = [
     quoteIcon: "/figmaAssets/svg-4.svg"
   },
   {
-    quote: "Fusion AI cut our onboarding time by 50%—setup was effortless, and our AI agents are now core to daily ops.":
+    quote: "Fusion AI cut our onboarding time by 50%—setup was effortless, and our AI agents are now core to daily ops.",
+    author: "Sarah Johnson",
     role: "Performance Marketer",
     image: "/figmaAssets/testimonial-author-headshot-1.png",
     quoteIcon: "/figmaAssets/svg.svg"
   },
   {
-    quote: "Automating lead follow‑ups boosted our conversion rate by 30% without adding headcount. Fusion AI is a game‑changer.":
+    quote: "Automating lead follow‑ups boosted our conversion rate by 30% without adding headcount. Fusion AI is a game‑changer.",
+    author: "Emily Chen",
     role: "Chief Growth Officer",
     image: "/figmaAssets/pretty-smiling-joyfully-female-with-fair-hair-dressed-casually-l.png",
     quoteIcon: "/figmaAssets/svg-1.svg"
   },
   {
-    quote: "Real‑time insights from AI agents help us spot trends before they emerge—our decisions are smarter and faster.":
+    quote: "Real‑time insights from AI agents help us spot trends before they emerge—our decisions are smarter and faster.",
+    author: "Michael Brown",
     role: "Head of Analytics",
     image: "/figmaAssets/testimonial-author-headshot-2.png",
     quoteIcon: "/figmaAssets/svg-3.svg"
