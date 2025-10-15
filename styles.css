@@ -543,6 +543,8 @@ body {
     border: 1px solid transparent;
     border-radius: 16px;
     padding: 2px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform;
 }
 
 .bento-card-1,
@@ -734,7 +736,8 @@ body {
     justify-content: center;
     gap: 16px;
     cursor: pointer;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, transform 0.3s ease;
+    will-change: transform;
 }
 
 .use-case-card:hover {
@@ -777,6 +780,7 @@ body {
 .testimonials-section {
     padding: 96px 0;
     position: relative;
+    overflow: hidden;
 }
 
 .bg-gradient-overlay {
@@ -802,15 +806,6 @@ body {
     padding: 0 163.3px;
 }
 
-@keyframes scroll {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
-}
-
 .testimonials-scroll:hover {
     animation-play-state: paused;
 }
@@ -827,6 +822,8 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform;
 }
 
 .quote-icon {
